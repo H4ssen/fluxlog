@@ -2,16 +2,13 @@
 #include "fluxlog/logger.hpp"
 #include "fluxlog/formatter/simple_formatter.hpp"
 #include "fluxlog/sink/console_sink.hpp"
+#include "fluxlog/formatter/simple_formatter.hpp"
 
 int main() {
 
     
-    auto formatter = std::make_shared<fluxlog::SimpleFormatter>();
-    auto consoleSink = std::make_shared<fluxlog::ConsoleSink>();
-
-    fluxlog::Logger log;
-    log.addSink(consoleSink);
-    log.setFormatter(formatter);
+    auto sink1 = std::make_shared<fluxlog::ConsoleSink>(std::make_unique<fluxlog::SimpleFormatter>());
+    fluxlog::Logger logger(sink1);
     
-    log.log(fluxlog::LogLevel::Info,"Application Started",__FILE__,__LINE__);
+    logger.log(fluxlog::LogLevel::Info,"Application Started",__FILE__,__LINE__);
 }

@@ -30,19 +30,16 @@ namespace fluxlog {
 
         LogRecord record = createLogRecord(level,message,file,line);
 
-        if (!formatter_) return;
-
-        std::string formatted_record = formatter_->format(record);
-
         for (const auto& sink : sinks_) {
-            sink->write(formatted_record);
+            sink->write(record);
         }
 
     }
 
-    Logger::Logger() :formatter_(std::make_shared<SimpleFormatter>()) 
+    Logger::Logger(std::shared_ptr<ISink> sink) 
     { 
-            minLevel_ = LogLevel::Info;
+            sinks_.push_back(sink);
+            minLevel_ = LogLevel::Info;//Default min level
     }
 
     LogRecord
@@ -59,11 +56,6 @@ namespace fluxlog {
     void
     Logger::addSink(std::shared_ptr<ISink> sink) {
         sinks_.push_back(sink);
-    }
-
-    void 
-    Logger::setFormatter(std::shared_ptr<IFormatter> formatter) {
-        formatter_ = formatter;
     }
 
     void 
