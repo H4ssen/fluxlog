@@ -6,6 +6,6 @@ namespace fluxlog{
     class ISink {
         public:
             virtual ~ISink() = default;
-            virtual void write(LogRecord record) = 0;
+            virtual void log(LogRecord record) = 0;
     };
 }

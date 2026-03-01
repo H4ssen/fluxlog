@@ -6,9 +6,8 @@
 namespace fluxlog {
 
     void
-    ConsoleSink::write(LogRecord record) {
+    ConsoleSink::log_mt(std::string_view record) {
         if (!formatter_) return;
-        std::string formattedMessage = formatter_->format(record);
-        std::cout<<formattedMessage<<std::endl;
+        std::cout<<record<<std::endl;
     }
 }

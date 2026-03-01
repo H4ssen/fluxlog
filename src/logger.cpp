@@ -31,7 +31,7 @@ namespace fluxlog {
         LogRecord record = createLogRecord(level,message,file,line);
 
         for (const auto& sink : sinks_) {
-            sink->write(record);
+            sink->log(record);
         }
 
     }
